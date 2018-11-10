@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Company-HTML Bootstrap theme</title>
+    <title>Flunked</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -32,19 +32,18 @@
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index.html"><h1><span>Com</span>pany</h1></a>
+							<a href="index.htm"><h1><span>Flun</span>ked</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index.html" class="active">Home</a></li>
-								<li role="presentation"><a href="about.html">About Us</a></li>
-								<li role="presentation"><a href="services.html">Services</a></li>								
-								<li role="presentation"><a href="portfolio.html">Portfolio</a></li>
-								<li role="presentation"><a href="blog.html">Blog</a></li>
-								<li role="presentation"><a href="contact.html">Contact</a></li>						
+								<li role="presentation"><a href="index.htm" class="active">Inicio</a></li>
+								<li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
+								<li role="presentation"><a href="registro.jsp">Registro</a></li>								
+								<li role="presentation"><a href="portfolio.html">Login</a></li>
+								<li role="presentation"><a href="contact.html">Contacto</a></li>						
 							</ul>
 						</div>
 					</div>						
@@ -61,9 +60,8 @@
                         <div class="row slide-margin">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
-                                    <h2 class="animation animated-item-1">Welcome <span>Company</span></h2>
-                                    <p class="animation animated-item-2">Accusantium doloremque laudantium totam rem aperiam, eaque ipsa...</p>
-                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                    <h2 class="animation animated-item-1">Bienvenido a <span>Flunked</span></h2>
+                                    <p class="animation animated-item-2">Bienvenido a la empresa lider en el mercado, donde la confiaza es lo primero.</p>
                                 </div>
                             </div>
 
