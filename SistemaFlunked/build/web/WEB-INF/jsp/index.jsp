@@ -41,7 +41,7 @@
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation"><a href="index.htm" class="active">Inicio</a></li>
 								<li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
-								<li role="presentation"><a href="registro.jsp">Registro</a></li>								
+								<li role="presentation"><a href="registro_general.jsp">Registro</a></li>								
 								<li role="presentation"><a href="portfolio.html">Login</a></li>
 								<li role="presentation"><a href="contact.html">Contacto</a></li>						
 							</ul>
