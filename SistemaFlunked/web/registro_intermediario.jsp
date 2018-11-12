@@ -4,6 +4,13 @@
     Author     : Matia
 --%>
 
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="Controladores.CiudadJpaController"%>
+<%@page import="java.util.List"%>
+<%@page import="Data.Ciudad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,9 +113,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    
-                                </select>
+                                <label>Ciudad</label>                               
+                                <select>
+                                <% 
+
+                                %>
                             </div>                            
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Registrarse</button>

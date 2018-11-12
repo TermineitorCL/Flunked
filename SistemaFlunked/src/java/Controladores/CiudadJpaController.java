@@ -21,7 +21,6 @@ import Data.Orden;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 
 /**
@@ -286,5 +285,6 @@ public class CiudadJpaController implements Serializable {
         } finally {
             em.close();
         }
-    }      
+    }   
+    
 }
