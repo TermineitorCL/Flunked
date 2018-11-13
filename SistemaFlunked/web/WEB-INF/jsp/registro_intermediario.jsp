@@ -114,11 +114,21 @@
                             </div>
                             <div class="form-group">
                                 <label>Ciudad</label>                               
-                                <select>
-                                <% 
+                                <select id="usuariosSelect" name="usuariosSelect">
 
-                                %>
-                            </div>                            
+                                    <% List<Ciudad> nombres = (List<Ciudad>) request.getSession().getAttribute("nombre");
+
+                                        if (nombres != null)
+
+                                            for (Ciudad cn : nombres) {
+                                    %>
+
+                                    <option value="<%=cn.getId()%>"><%=cn.getNombre()%></option>
+
+                                    <%}%>>
+
+                                </select>
+                                                        
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Registrarse</button>
                             </div>
