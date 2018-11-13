@@ -49,7 +49,7 @@
 								<li role="presentation"><a href="index.htm" >Inicio</a></li>
 								<li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
 								<li role="presentation"><a href="registro_general.jsp" class="active">Registro</a></li>								
-								<li role="presentation"><a href="portfolio.html">Login</a></li>
+								<li role="presentation"><a href="login_general.jsp"">Login</a></li>
 								<li role="presentation"><a href="contact.html">Contacto</a></li>						
 							</ul>
 						</div>
