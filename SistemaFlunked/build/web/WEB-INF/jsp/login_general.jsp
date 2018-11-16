@@ -11,7 +11,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Registro</title>
+        <title>Login</title>
 
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -48,8 +48,8 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation"><a href="index.htm" >Inicio</a></li>
                                     <li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
-                                    <li role="presentation"><a href="registro_general.jsp" class="active">Registro</a></li>								
-                                    <li role="presentation"><a href="login_general.jsp">Login</a></li>
+                                    <li role="presentation"><a href="registro_general.htm">Registro</a></li>								
+                                    <li role="presentation"><a href="login_general.htm" class="active">Login</a></li>
                                     <li role="presentation"><a href="contact.html">Contacto</a></li>						
                                 </ul>
                             </div>
@@ -63,7 +63,7 @@
             <div class="container">	
                 <div class="breadcrumb">							
                     <li><a href="index.htm">Inicio</a></li>
-                    <li>Registro</li>			
+                    <li>Login</li>			
                 </div>		
             </div>	
         </div>
@@ -72,16 +72,16 @@
                 <div class="container">
                     <div class="center">   
                         <br/>
-                        <h2>Registro</h2>
-                        <p>Seleccione tipo de usuario que desea registar.</p>
+                        <h2>Inicio de Sesion</h2>
+                        <p>Seleccione tipo de usuario con el que desea iniciar sesion       .</p>
                     </div> 
                     <div class="row contact-wrap"> 
                         <div class="form-group">
                             <div class="col-12 col-sm-8 col-md-6 ">
-                                <a href="registro_cliente.jsp" class="btn btn-primary btn-lg">Registro de Cliente</a>
+                                <a href="login_cliente.htm" class="btn btn-primary btn-lg">Login de Cliente</a>
                             </div>
                             <div class="col-12 col-sm-8 col-md-6">
-                                <a href="registro_intermediario.jsp" class="btn btn-primary btn-lg">Registro de Intermediario</a>
+                                <a href="login_intermediario.htm" class="btn btn-primary btn-lg">Login de Intermediario</a>
                             </div>
                         </div>                   
                     </div>
@@ -142,3 +142,4 @@
     <script src="js/functions.js"></script>
 </body>
 </html>
+
