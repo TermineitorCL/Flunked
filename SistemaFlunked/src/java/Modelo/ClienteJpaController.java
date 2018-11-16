@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ControladoresJPA;
+package Modelo;
 
-import Controladores.exceptions.IllegalOrphanException;
-import Controladores.exceptions.NonexistentEntityException;
-import Controladores.exceptions.RollbackFailureException;
-import Data.Ciudad;
+import Modelo.*;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
+import Modelo.exceptions.RollbackFailureException;
+import Data.Cliente;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -27,9 +28,9 @@ import javax.transaction.UserTransaction;
  *
  * @author Matia
  */
-public class CiudadJpaController implements Serializable {
+public class ClienteJpaController implements Serializable {
 
-    public CiudadJpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public ClienteJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -40,46 +41,46 @@ public class CiudadJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Ciudad ciudad) throws RollbackFailureException, Exception {
-        if (ciudad.getIntermediarioCollection() == null) {
-            ciudad.setIntermediarioCollection(new ArrayList<Intermediario>());
+    public void create(Cliente cliente) throws RollbackFailureException, Exception {
+        if (cliente.getIntermediarioCollection() == null) {
+            cliente.setIntermediarioCollection(new ArrayList<Intermediario>());
         }
-        if (ciudad.getOrdenCollection() == null) {
-            ciudad.setOrdenCollection(new ArrayList<Orden>());
+        if (cliente.getOrdenCollection() == null) {
+            cliente.setOrdenCollection(new ArrayList<Orden>());
         }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
             Collection<Intermediario> attachedIntermediarioCollection = new ArrayList<Intermediario>();
-            for (Intermediario intermediarioCollectionIntermediarioToAttach : ciudad.getIntermediarioCollection()) {
+            for (Intermediario intermediarioCollectionIntermediarioToAttach : cliente.getIntermediarioCollection()) {
                 intermediarioCollectionIntermediarioToAttach = em.getReference(intermediarioCollectionIntermediarioToAttach.getClass(), intermediarioCollectionIntermediarioToAttach.getId());
                 attachedIntermediarioCollection.add(intermediarioCollectionIntermediarioToAttach);
             }
-            ciudad.setIntermediarioCollection(attachedIntermediarioCollection);
+            cliente.setIntermediarioCollection(attachedIntermediarioCollection);
             Collection<Orden> attachedOrdenCollection = new ArrayList<Orden>();
-            for (Orden ordenCollectionOrdenToAttach : ciudad.getOrdenCollection()) {
+            for (Orden ordenCollectionOrdenToAttach : cliente.getOrdenCollection()) {
                 ordenCollectionOrdenToAttach = em.getReference(ordenCollectionOrdenToAttach.getClass(), ordenCollectionOrdenToAttach.getId());
                 attachedOrdenCollection.add(ordenCollectionOrdenToAttach);
             }
-            ciudad.setOrdenCollection(attachedOrdenCollection);
-            em.persist(ciudad);
-            for (Intermediario intermediarioCollectionIntermediario : ciudad.getIntermediarioCollection()) {
-                Ciudad oldCiudadIdOfIntermediarioCollectionIntermediario = intermediarioCollectionIntermediario.getCiudadId();
-                intermediarioCollectionIntermediario.setCiudadId(ciudad);
+            cliente.setOrdenCollection(attachedOrdenCollection);
+            em.persist(cliente);
+            for (Intermediario intermediarioCollectionIntermediario : cliente.getIntermediarioCollection()) {
+                Cliente oldClienteIdOfIntermediarioCollectionIntermediario = intermediarioCollectionIntermediario.getClienteId();
+                intermediarioCollectionIntermediario.setClienteId(cliente);
                 intermediarioCollectionIntermediario = em.merge(intermediarioCollectionIntermediario);
-                if (oldCiudadIdOfIntermediarioCollectionIntermediario != null) {
-                    oldCiudadIdOfIntermediarioCollectionIntermediario.getIntermediarioCollection().remove(intermediarioCollectionIntermediario);
-                    oldCiudadIdOfIntermediarioCollectionIntermediario = em.merge(oldCiudadIdOfIntermediarioCollectionIntermediario);
+                if (oldClienteIdOfIntermediarioCollectionIntermediario != null) {
+                    oldClienteIdOfIntermediarioCollectionIntermediario.getIntermediarioCollection().remove(intermediarioCollectionIntermediario);
+                    oldClienteIdOfIntermediarioCollectionIntermediario = em.merge(oldClienteIdOfIntermediarioCollectionIntermediario);
                 }
             }
-            for (Orden ordenCollectionOrden : ciudad.getOrdenCollection()) {
-                Ciudad oldCiudadIdOfOrdenCollectionOrden = ordenCollectionOrden.getCiudadId();
-                ordenCollectionOrden.setCiudadId(ciudad);
+            for (Orden ordenCollectionOrden : cliente.getOrdenCollection()) {
+                Cliente oldClienteIdOfOrdenCollectionOrden = ordenCollectionOrden.getClienteId();
+                ordenCollectionOrden.setClienteId(cliente);
                 ordenCollectionOrden = em.merge(ordenCollectionOrden);
-                if (oldCiudadIdOfOrdenCollectionOrden != null) {
-                    oldCiudadIdOfOrdenCollectionOrden.getOrdenCollection().remove(ordenCollectionOrden);
-                    oldCiudadIdOfOrdenCollectionOrden = em.merge(oldCiudadIdOfOrdenCollectionOrden);
+                if (oldClienteIdOfOrdenCollectionOrden != null) {
+                    oldClienteIdOfOrdenCollectionOrden.getOrdenCollection().remove(ordenCollectionOrden);
+                    oldClienteIdOfOrdenCollectionOrden = em.merge(oldClienteIdOfOrdenCollectionOrden);
                 }
             }
             utx.commit();
@@ -97,23 +98,23 @@ public class CiudadJpaController implements Serializable {
         }
     }
 
-    public void edit(Ciudad ciudad) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Cliente cliente) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Ciudad persistentCiudad = em.find(Ciudad.class, ciudad.getId());
-            Collection<Intermediario> intermediarioCollectionOld = persistentCiudad.getIntermediarioCollection();
-            Collection<Intermediario> intermediarioCollectionNew = ciudad.getIntermediarioCollection();
-            Collection<Orden> ordenCollectionOld = persistentCiudad.getOrdenCollection();
-            Collection<Orden> ordenCollectionNew = ciudad.getOrdenCollection();
+            Cliente persistentCliente = em.find(Cliente.class, cliente.getId());
+            Collection<Intermediario> intermediarioCollectionOld = persistentCliente.getIntermediarioCollection();
+            Collection<Intermediario> intermediarioCollectionNew = cliente.getIntermediarioCollection();
+            Collection<Orden> ordenCollectionOld = persistentCliente.getOrdenCollection();
+            Collection<Orden> ordenCollectionNew = cliente.getOrdenCollection();
             List<String> illegalOrphanMessages = null;
             for (Intermediario intermediarioCollectionOldIntermediario : intermediarioCollectionOld) {
                 if (!intermediarioCollectionNew.contains(intermediarioCollectionOldIntermediario)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Intermediario " + intermediarioCollectionOldIntermediario + " since its ciudadId field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Intermediario " + intermediarioCollectionOldIntermediario + " since its clienteId field is not nullable.");
                 }
             }
             for (Orden ordenCollectionOldOrden : ordenCollectionOld) {
@@ -121,7 +122,7 @@ public class CiudadJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Orden " + ordenCollectionOldOrden + " since its ciudadId field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Orden " + ordenCollectionOldOrden + " since its clienteId field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -133,34 +134,34 @@ public class CiudadJpaController implements Serializable {
                 attachedIntermediarioCollectionNew.add(intermediarioCollectionNewIntermediarioToAttach);
             }
             intermediarioCollectionNew = attachedIntermediarioCollectionNew;
-            ciudad.setIntermediarioCollection(intermediarioCollectionNew);
+            cliente.setIntermediarioCollection(intermediarioCollectionNew);
             Collection<Orden> attachedOrdenCollectionNew = new ArrayList<Orden>();
             for (Orden ordenCollectionNewOrdenToAttach : ordenCollectionNew) {
                 ordenCollectionNewOrdenToAttach = em.getReference(ordenCollectionNewOrdenToAttach.getClass(), ordenCollectionNewOrdenToAttach.getId());
                 attachedOrdenCollectionNew.add(ordenCollectionNewOrdenToAttach);
             }
             ordenCollectionNew = attachedOrdenCollectionNew;
-            ciudad.setOrdenCollection(ordenCollectionNew);
-            ciudad = em.merge(ciudad);
+            cliente.setOrdenCollection(ordenCollectionNew);
+            cliente = em.merge(cliente);
             for (Intermediario intermediarioCollectionNewIntermediario : intermediarioCollectionNew) {
                 if (!intermediarioCollectionOld.contains(intermediarioCollectionNewIntermediario)) {
-                    Ciudad oldCiudadIdOfIntermediarioCollectionNewIntermediario = intermediarioCollectionNewIntermediario.getCiudadId();
-                    intermediarioCollectionNewIntermediario.setCiudadId(ciudad);
+                    Cliente oldClienteIdOfIntermediarioCollectionNewIntermediario = intermediarioCollectionNewIntermediario.getClienteId();
+                    intermediarioCollectionNewIntermediario.setClienteId(cliente);
                     intermediarioCollectionNewIntermediario = em.merge(intermediarioCollectionNewIntermediario);
-                    if (oldCiudadIdOfIntermediarioCollectionNewIntermediario != null && !oldCiudadIdOfIntermediarioCollectionNewIntermediario.equals(ciudad)) {
-                        oldCiudadIdOfIntermediarioCollectionNewIntermediario.getIntermediarioCollection().remove(intermediarioCollectionNewIntermediario);
-                        oldCiudadIdOfIntermediarioCollectionNewIntermediario = em.merge(oldCiudadIdOfIntermediarioCollectionNewIntermediario);
+                    if (oldClienteIdOfIntermediarioCollectionNewIntermediario != null && !oldClienteIdOfIntermediarioCollectionNewIntermediario.equals(cliente)) {
+                        oldClienteIdOfIntermediarioCollectionNewIntermediario.getIntermediarioCollection().remove(intermediarioCollectionNewIntermediario);
+                        oldClienteIdOfIntermediarioCollectionNewIntermediario = em.merge(oldClienteIdOfIntermediarioCollectionNewIntermediario);
                     }
                 }
             }
             for (Orden ordenCollectionNewOrden : ordenCollectionNew) {
                 if (!ordenCollectionOld.contains(ordenCollectionNewOrden)) {
-                    Ciudad oldCiudadIdOfOrdenCollectionNewOrden = ordenCollectionNewOrden.getCiudadId();
-                    ordenCollectionNewOrden.setCiudadId(ciudad);
+                    Cliente oldClienteIdOfOrdenCollectionNewOrden = ordenCollectionNewOrden.getClienteId();
+                    ordenCollectionNewOrden.setClienteId(cliente);
                     ordenCollectionNewOrden = em.merge(ordenCollectionNewOrden);
-                    if (oldCiudadIdOfOrdenCollectionNewOrden != null && !oldCiudadIdOfOrdenCollectionNewOrden.equals(ciudad)) {
-                        oldCiudadIdOfOrdenCollectionNewOrden.getOrdenCollection().remove(ordenCollectionNewOrden);
-                        oldCiudadIdOfOrdenCollectionNewOrden = em.merge(oldCiudadIdOfOrdenCollectionNewOrden);
+                    if (oldClienteIdOfOrdenCollectionNewOrden != null && !oldClienteIdOfOrdenCollectionNewOrden.equals(cliente)) {
+                        oldClienteIdOfOrdenCollectionNewOrden.getOrdenCollection().remove(ordenCollectionNewOrden);
+                        oldClienteIdOfOrdenCollectionNewOrden = em.merge(oldClienteIdOfOrdenCollectionNewOrden);
                     }
                 }
             }
@@ -173,9 +174,9 @@ public class CiudadJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = ciudad.getId();
-                if (findCiudad(id) == null) {
-                    throw new NonexistentEntityException("The ciudad with id " + id + " no longer exists.");
+                Integer id = cliente.getId();
+                if (findCliente(id) == null) {
+                    throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -191,32 +192,32 @@ public class CiudadJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Ciudad ciudad;
+            Cliente cliente;
             try {
-                ciudad = em.getReference(Ciudad.class, id);
-                ciudad.getId();
+                cliente = em.getReference(Cliente.class, id);
+                cliente.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The ciudad with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Intermediario> intermediarioCollectionOrphanCheck = ciudad.getIntermediarioCollection();
+            Collection<Intermediario> intermediarioCollectionOrphanCheck = cliente.getIntermediarioCollection();
             for (Intermediario intermediarioCollectionOrphanCheckIntermediario : intermediarioCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Ciudad (" + ciudad + ") cannot be destroyed since the Intermediario " + intermediarioCollectionOrphanCheckIntermediario + " in its intermediarioCollection field has a non-nullable ciudadId field.");
+                illegalOrphanMessages.add("This Cliente (" + cliente + ") cannot be destroyed since the Intermediario " + intermediarioCollectionOrphanCheckIntermediario + " in its intermediarioCollection field has a non-nullable clienteId field.");
             }
-            Collection<Orden> ordenCollectionOrphanCheck = ciudad.getOrdenCollection();
+            Collection<Orden> ordenCollectionOrphanCheck = cliente.getOrdenCollection();
             for (Orden ordenCollectionOrphanCheckOrden : ordenCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Ciudad (" + ciudad + ") cannot be destroyed since the Orden " + ordenCollectionOrphanCheckOrden + " in its ordenCollection field has a non-nullable ciudadId field.");
+                illegalOrphanMessages.add("This Cliente (" + cliente + ") cannot be destroyed since the Orden " + ordenCollectionOrphanCheckOrden + " in its ordenCollection field has a non-nullable clienteId field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            em.remove(ciudad);
+            em.remove(cliente);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -232,19 +233,19 @@ public class CiudadJpaController implements Serializable {
         }
     }
 
-    public List<Ciudad> findCiudadEntities() {
-        return findCiudadEntities(true, -1, -1);
+    public List<Cliente> findClienteEntities() {
+        return findClienteEntities(true, -1, -1);
     }
 
-    public List<Ciudad> findCiudadEntities(int maxResults, int firstResult) {
-        return findCiudadEntities(false, maxResults, firstResult);
+    public List<Cliente> findClienteEntities(int maxResults, int firstResult) {
+        return findClienteEntities(false, maxResults, firstResult);
     }
 
-    private List<Ciudad> findCiudadEntities(boolean all, int maxResults, int firstResult) {
+    private List<Cliente> findClienteEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Ciudad.class));
+            cq.select(cq.from(Cliente.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -256,29 +257,20 @@ public class CiudadJpaController implements Serializable {
         }
     }
 
-    public Ciudad findCiudad(Integer id) {
+    public Cliente findCliente(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Ciudad.class, id);
+            return em.find(Cliente.class, id);
         } finally {
             em.close();
         }
     }
 
-        public Ciudad findCiudadAll(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Ciudad.class, id);
-        } finally {
-            em.close();
-        }
-    }
-        
-    public int getCiudadCount() {
+    public int getClienteCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Ciudad> rt = cq.from(Ciudad.class);
+            Root<Cliente> rt = cq.from(Cliente.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -286,4 +278,5 @@ public class CiudadJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

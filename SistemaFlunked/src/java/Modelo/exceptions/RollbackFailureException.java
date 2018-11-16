@@ -1,4 +1,4 @@
-package Controladores.exceptions;
+package Modelo.exceptions;
 
 public class RollbackFailureException extends Exception {
     public RollbackFailureException(String message, Throwable cause) {

@@ -16,7 +16,7 @@
     <mvc:annotation-driven/>
     <tx:annotation-driven/>
     
-    <context:component-scan base-package="ControladoresJPA"/>
+    <context:component-scan base-package="Controladores"/>
     <context:component-scan base-package="Data"/>
     <context:component-scan base-package="Modelo"/>
    

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ControladoresJPA;
+package Modelo;
 
-import Controladores.exceptions.NonexistentEntityException;
-import Controladores.exceptions.RollbackFailureException;
+import Modelo.*;
+import Modelo.exceptions.NonexistentEntityException;
+import Modelo.exceptions.RollbackFailureException;
 import Data.Boleta;
 import java.io.Serializable;
 import javax.persistence.Query;

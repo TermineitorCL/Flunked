@@ -77,10 +77,10 @@
                     </div> 
                     <div class="row contact-wrap"> 
                         <div class="form-group">
-                            <div class="col-12 col-sm-8 col-md-6 ">
+                            <div class="col-6 col-sm-4 col-md-6">
                                 <a href="registro_cliente.htm" class="btn btn-primary btn-lg">Registro de Cliente</a>
                             </div>
-                            <div class="col-12 col-sm-8 col-md-6">
+                            <div class="col-6 col-sm-4 col-md-6">
                                 <a href="registro_intermediario.htm" class="btn btn-primary btn-lg">Registro de Intermediario</a>
                             </div>
                         </div>                   
