@@ -32,4 +32,8 @@
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
+    <persistence-unit-ref> 
+        <persistence-unit-ref-name>persistence/SistemaFlunkedPU</persistence-unit-ref-name> 
+        <persistence-unit-name>SistemaFlunkedPU</persistence-unit-name> 
+    </persistence-unit-ref>
 </web-app>

@@ -113,8 +113,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Ciudad</label>                               
-               
+                                <label>Ciudad</label>   
+                                 <form:select path="phone" items="${readAll()}"/>
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Registrarse</button>
                             </div>

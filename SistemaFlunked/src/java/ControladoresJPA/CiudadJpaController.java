@@ -285,5 +285,5 @@ public class CiudadJpaController implements Serializable {
         } finally {
             em.close();
         }
-    }    
+    }
 }
