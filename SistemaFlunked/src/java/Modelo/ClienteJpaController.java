@@ -5,7 +5,6 @@
  */
 package Modelo;
 
-import Modelo.*;
 import Modelo.exceptions.IllegalOrphanException;
 import Modelo.exceptions.NonexistentEntityException;
 import Modelo.exceptions.RollbackFailureException;
