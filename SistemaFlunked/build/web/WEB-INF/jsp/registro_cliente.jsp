@@ -47,10 +47,8 @@
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation"><a href="index.htm" >Inicio</a></li>
-								<li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
 								<li role="presentation"><a href="registro_general.htm" class="active">Registro</a></li>								
-								<li role="presentation"><a href="login_general.htm">Login</a></li>
-								<li role="presentation"><a href="contact.html">Contacto</a></li>						
+								<li role="presentation"><a href="login_general.htm">Login</a></li>						
 							</ul>
 						</div>
 					</div>						
@@ -76,33 +74,33 @@
                 </div> 
                 <div class="row contact-wrap"> 
                     <div class="status alert alert-success" style="display: none"></div>
-                    <form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="registro_cliente.htm">
+                    <form:form method="POST" action="registro_cliente" modelAttribute="new-cliente-form">
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
-                                <label>Nombre</label>
+                                <p>Nombre</p>
                                 <input type="text" name="nombre" class="form-control" required="required">
                             </div>
                             <div class="form-group">
-                                <label>Apellido</label>
+                                <p>Apellido</p>
                                 <input type="text" name="apellido" class="form-control" required="required">
                             </div>
                             <div class="form-group">
-                                <label>RUT</label>
+                                <p>RUT</p>
                                 <input type="text" name="rut" class="form-control" required="required">
                             </div>
                             <div class="form-group">
-                                <label>Correo</label>
+                                <p>Correo</p>
                                 <input type="email" name="email" class="form-control" required="required">
                             </div>
                             <div class="form-group">
-                                <label>Telefono</label>
+                                <p>Telefono</p>
                                 <input type="text" class="form-control" required="required" name="telefono">
                             </div>
                             <div class="form-group">
-                                <button type="submit" name="boton" class="btn btn-primary btn-lg" required="required">Registrarse</button>
+                                <button type="submit" name="guardar" class="btn btn-primary btn-lg" required="required">Registrarse</button>
                             </div>
                         </div>                       
-                    </form> 
+                  </form:form>
                 </div><!--/.row-->
             </div><!--/.container-->
         </section><!--/#contact-page-->

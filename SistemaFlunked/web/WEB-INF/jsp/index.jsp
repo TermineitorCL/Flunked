@@ -40,10 +40,8 @@
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation"><a href="index.htm" class="active">Inicio</a></li>
-								<li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
 								<li role="presentation"><a href="registro_general.htm">Registro</a></li>								
-								<li role="presentation"><a href="login_general.htm">Login</a></li>
-								<li role="presentation"><a href="contact.html">Contacto</a></li>						
+								<li role="presentation"><a href="login_general.htm">Login</a></li>					
 							</ul>
 						</div>
 					</div>						

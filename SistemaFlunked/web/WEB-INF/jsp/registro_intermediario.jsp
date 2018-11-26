@@ -54,10 +54,8 @@
                             <div class="menu">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation"><a href="index.htm" >Inicio</a></li>
-                                    <li role="presentation"><a href="about.html">Nuestro Servicio</a></li>
                                     <li role="presentation"><a href="registro_general.htm" class="active">Registro</a></li>								
-                                    <li role="presentation"><a href="login_general.htm">Login</a></li>
-                                    <li role="presentation"><a href="contact.html">Contacto</a></li>						
+                                    <li role="presentation"><a href="login_general.htm">Login</a></li>					
                                 </ul>
                             </div>
                         </div>						
@@ -83,7 +81,7 @@
                 </div> 
                 <div class="row contact-wrap"> 
                     <div class="status alert alert-success" style="display: none"></div>
-                    <form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="registro_cliente_bd.jsp">
+                    <form id="main-contact-form" class="contact-form" name="contact-form" method="post" a modelAttribute="new-intermediario-form">
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
                                 <label>Nombre</label>
@@ -114,7 +112,6 @@
                             </div>
                             <div class="form-group">
                                 <label>Ciudad</label>   
-                                 <form:select path="phone" items="${readAll()}"/>
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Registrarse</button>
                             </div>

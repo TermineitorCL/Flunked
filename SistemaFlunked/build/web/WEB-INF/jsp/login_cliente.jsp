@@ -1,5 +1,5 @@
 <%-- 
-    Document   : registro
+    Document   : login_cliente
     Created on : 10-11-2018, 20:03:35
     Author     : Matia
 --%>
@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Registro</title>
+   <title>Login</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -47,8 +47,8 @@
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation"><a href="index.htm" >Inicio</a></li>
-								<li role="presentation"><a href="registro_general.htm" class="active">Registro</a></li>								
-								<li role="presentation"><a href="login_general.htm">Login</a></li>						
+								<li role="presentation"><a href="registro_general.htm">Registro</a></li>								
+								<li role="presentation"><a href="login_general.htm" class="active">Login</a></li>						
 							</ul>
 						</div>
 					</div>						
@@ -61,7 +61,7 @@
 		<div class="container">	
 			<div class="breadcrumb">							
 				<li><a href="index.htm">Inicio</a></li>
-				<li>Registro</li>			
+				<li>Login</li>			
 			</div>		
                 </div>	
         </div>
@@ -69,37 +69,24 @@
             <div class="container">
                 <div class="center">   
                     <br/>
-                    <h2>Registro</h2>
-                    <p>Ingrese sus datos de registro de cliente.</p>
+                    <h2>Login</h2>
+                    <p>Ingrese sus datos de ingresar como cliente.</p>
                 </div> 
                 <div class="row contact-wrap"> 
                     <div class="status alert alert-success" style="display: none"></div>
                     <form:form method="POST" action="registro_cliente" modelAttribute="new-cliente-form">
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
-                                <p>Nombre</p>
-                                <input type="text" name="nombre" class="form-control" required="required">
-                            </div>
-                            <div class="form-group">
-                                <p>Apellido</p>
-                                <input type="text" name="apellido" class="form-control" required="required">
-                            </div>
-                            <div class="form-group">
-                                <p>RUT</p>
-                                <input type="text" name="rut" class="form-control" required="required">
-                            </div>
-                            <div class="form-group">
                                 <p>Correo</p>
                                 <input type="email" name="email" class="form-control" required="required">
                             </div>
                             <div class="form-group">
-                                <p>Telefono</p>
-                                <input type="text" class="form-control" required="required" name="telefono">
+                                <p>Contraseña</p>
+                                <input type="password" name="email" class="form-control" required="required">
                             </div>
                             <div class="form-group">
-                                <button type="submit" name="guardar" class="btn btn-primary btn-lg" required="required">Registrarse</button>
-                            </div>
-                        </div>                       
+                                <button type="submit" name="guardar" class="btn btn-primary btn-lg" required="required">Ingresa</button>
+                            </div>                      
                   </form:form>
                 </div><!--/.row-->
             </div><!--/.container-->
