@@ -5,10 +5,6 @@
  */
 package Modelo;
 
-import Modelo.*;
-import Modelo.exceptions.IllegalOrphanException;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +16,9 @@ import Data.Intermediario;
 import Data.SolicitudCompra;
 import Data.Boleta;
 import Data.Orden;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
+import Modelo.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

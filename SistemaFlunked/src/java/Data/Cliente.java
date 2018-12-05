@@ -58,9 +58,10 @@ public class Cliente implements Serializable {
     private String apellido;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "rut")
-    private int rut;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Correo electrónico no válido")//if the field contains email address consider using this annotation to enforce field validation
+    private String rut;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -72,8 +73,6 @@ public class Cliente implements Serializable {
     @Column(name = "telefono")
     private String telefono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteId")
-    private Collection<Intermediario> intermediarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteId")
     private Collection<Orden> ordenCollection;
 
     public Cliente() {
@@ -83,7 +82,7 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public Cliente(Integer id, String nombre, String apellido, int rut, String email, String telefono) {
+    public Cliente(Integer id, String nombre, String apellido, String rut, String email, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -116,11 +115,11 @@ public class Cliente implements Serializable {
         this.apellido = apellido;
     }
 
-    public int getRut() {
+    public String getRut() {
         return rut;
     }
 
-    public void setRut(int rut) {
+    public void setRut(String rut) {
         this.rut = rut;
     }
 
@@ -138,15 +137,6 @@ public class Cliente implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    @XmlTransient
-    public Collection<Intermediario> getIntermediarioCollection() {
-        return intermediarioCollection;
-    }
-
-    public void setIntermediarioCollection(Collection<Intermediario> intermediarioCollection) {
-        this.intermediarioCollection = intermediarioCollection;
     }
 
     @XmlTransient

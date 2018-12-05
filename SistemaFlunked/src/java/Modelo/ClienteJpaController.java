@@ -5,19 +5,18 @@
  */
 package Modelo;
 
-import Modelo.exceptions.IllegalOrphanException;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
 import Data.Cliente;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Data.Intermediario;
+import Data.Orden;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
+import Modelo.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.Collection;
-import Data.Orden;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,9 +40,6 @@ public class ClienteJpaController implements Serializable {
     }
 
     public void create(Cliente cliente) throws RollbackFailureException, Exception {
-        if (cliente.getIntermediarioCollection() == null) {
-            cliente.setIntermediarioCollection(new ArrayList<Intermediario>());
-        }
         if (cliente.getOrdenCollection() == null) {
             cliente.setOrdenCollection(new ArrayList<Orden>());
         }
@@ -51,12 +47,6 @@ public class ClienteJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Collection<Intermediario> attachedIntermediarioCollection = new ArrayList<Intermediario>();
-            for (Intermediario intermediarioCollectionIntermediarioToAttach : cliente.getIntermediarioCollection()) {
-                intermediarioCollectionIntermediarioToAttach = em.getReference(intermediarioCollectionIntermediarioToAttach.getClass(), intermediarioCollectionIntermediarioToAttach.getId());
-                attachedIntermediarioCollection.add(intermediarioCollectionIntermediarioToAttach);
-            }
-            cliente.setIntermediarioCollection(attachedIntermediarioCollection);
             Collection<Orden> attachedOrdenCollection = new ArrayList<Orden>();
             for (Orden ordenCollectionOrdenToAttach : cliente.getOrdenCollection()) {
                 ordenCollectionOrdenToAttach = em.getReference(ordenCollectionOrdenToAttach.getClass(), ordenCollectionOrdenToAttach.getId());
@@ -64,15 +54,6 @@ public class ClienteJpaController implements Serializable {
             }
             cliente.setOrdenCollection(attachedOrdenCollection);
             em.persist(cliente);
-            for (Intermediario intermediarioCollectionIntermediario : cliente.getIntermediarioCollection()) {
-                Cliente oldClienteIdOfIntermediarioCollectionIntermediario = intermediarioCollectionIntermediario.getClienteId();
-                intermediarioCollectionIntermediario.setClienteId(cliente);
-                intermediarioCollectionIntermediario = em.merge(intermediarioCollectionIntermediario);
-                if (oldClienteIdOfIntermediarioCollectionIntermediario != null) {
-                    oldClienteIdOfIntermediarioCollectionIntermediario.getIntermediarioCollection().remove(intermediarioCollectionIntermediario);
-                    oldClienteIdOfIntermediarioCollectionIntermediario = em.merge(oldClienteIdOfIntermediarioCollectionIntermediario);
-                }
-            }
             for (Orden ordenCollectionOrden : cliente.getOrdenCollection()) {
                 Cliente oldClienteIdOfOrdenCollectionOrden = ordenCollectionOrden.getClienteId();
                 ordenCollectionOrden.setClienteId(cliente);
@@ -103,19 +84,9 @@ public class ClienteJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Cliente persistentCliente = em.find(Cliente.class, cliente.getId());
-            Collection<Intermediario> intermediarioCollectionOld = persistentCliente.getIntermediarioCollection();
-            Collection<Intermediario> intermediarioCollectionNew = cliente.getIntermediarioCollection();
             Collection<Orden> ordenCollectionOld = persistentCliente.getOrdenCollection();
             Collection<Orden> ordenCollectionNew = cliente.getOrdenCollection();
             List<String> illegalOrphanMessages = null;
-            for (Intermediario intermediarioCollectionOldIntermediario : intermediarioCollectionOld) {
-                if (!intermediarioCollectionNew.contains(intermediarioCollectionOldIntermediario)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Intermediario " + intermediarioCollectionOldIntermediario + " since its clienteId field is not nullable.");
-                }
-            }
             for (Orden ordenCollectionOldOrden : ordenCollectionOld) {
                 if (!ordenCollectionNew.contains(ordenCollectionOldOrden)) {
                     if (illegalOrphanMessages == null) {
@@ -127,13 +98,6 @@ public class ClienteJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Intermediario> attachedIntermediarioCollectionNew = new ArrayList<Intermediario>();
-            for (Intermediario intermediarioCollectionNewIntermediarioToAttach : intermediarioCollectionNew) {
-                intermediarioCollectionNewIntermediarioToAttach = em.getReference(intermediarioCollectionNewIntermediarioToAttach.getClass(), intermediarioCollectionNewIntermediarioToAttach.getId());
-                attachedIntermediarioCollectionNew.add(intermediarioCollectionNewIntermediarioToAttach);
-            }
-            intermediarioCollectionNew = attachedIntermediarioCollectionNew;
-            cliente.setIntermediarioCollection(intermediarioCollectionNew);
             Collection<Orden> attachedOrdenCollectionNew = new ArrayList<Orden>();
             for (Orden ordenCollectionNewOrdenToAttach : ordenCollectionNew) {
                 ordenCollectionNewOrdenToAttach = em.getReference(ordenCollectionNewOrdenToAttach.getClass(), ordenCollectionNewOrdenToAttach.getId());
@@ -142,17 +106,6 @@ public class ClienteJpaController implements Serializable {
             ordenCollectionNew = attachedOrdenCollectionNew;
             cliente.setOrdenCollection(ordenCollectionNew);
             cliente = em.merge(cliente);
-            for (Intermediario intermediarioCollectionNewIntermediario : intermediarioCollectionNew) {
-                if (!intermediarioCollectionOld.contains(intermediarioCollectionNewIntermediario)) {
-                    Cliente oldClienteIdOfIntermediarioCollectionNewIntermediario = intermediarioCollectionNewIntermediario.getClienteId();
-                    intermediarioCollectionNewIntermediario.setClienteId(cliente);
-                    intermediarioCollectionNewIntermediario = em.merge(intermediarioCollectionNewIntermediario);
-                    if (oldClienteIdOfIntermediarioCollectionNewIntermediario != null && !oldClienteIdOfIntermediarioCollectionNewIntermediario.equals(cliente)) {
-                        oldClienteIdOfIntermediarioCollectionNewIntermediario.getIntermediarioCollection().remove(intermediarioCollectionNewIntermediario);
-                        oldClienteIdOfIntermediarioCollectionNewIntermediario = em.merge(oldClienteIdOfIntermediarioCollectionNewIntermediario);
-                    }
-                }
-            }
             for (Orden ordenCollectionNewOrden : ordenCollectionNew) {
                 if (!ordenCollectionOld.contains(ordenCollectionNewOrden)) {
                     Cliente oldClienteIdOfOrdenCollectionNewOrden = ordenCollectionNewOrden.getClienteId();
@@ -199,13 +152,6 @@ public class ClienteJpaController implements Serializable {
                 throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Intermediario> intermediarioCollectionOrphanCheck = cliente.getIntermediarioCollection();
-            for (Intermediario intermediarioCollectionOrphanCheckIntermediario : intermediarioCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Cliente (" + cliente + ") cannot be destroyed since the Intermediario " + intermediarioCollectionOrphanCheckIntermediario + " in its intermediarioCollection field has a non-nullable clienteId field.");
-            }
             Collection<Orden> ordenCollectionOrphanCheck = cliente.getOrdenCollection();
             for (Orden ordenCollectionOrphanCheckOrden : ordenCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {

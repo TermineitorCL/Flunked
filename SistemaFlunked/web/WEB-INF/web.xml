@@ -16,6 +16,10 @@
         <servlet-name>lectura_ciudad</servlet-name>
         <servlet-class>Servlet.lectura_ciudad</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>guardar_clientes</servlet-name>
+        <servlet-class>Servlet.guardar_clientes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>lectura_ciudad</servlet-name>
         <url-pattern>/lectura_ciudad</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>guardar_clientes</servlet-name>
+        <url-pattern>/guardar_clientes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -32,8 +40,8 @@
     <welcome-file-list>
         <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
-    <persistence-unit-ref> 
-        <persistence-unit-ref-name>persistence/SistemaFlunkedPU</persistence-unit-ref-name> 
-        <persistence-unit-name>SistemaFlunkedPU</persistence-unit-name> 
+    <persistence-unit-ref>
+        <persistence-unit-ref-name>persistence/SistemaFlunkedPU</persistence-unit-ref-name>
+        <persistence-unit-name>SistemaFlunkedPU</persistence-unit-name>
     </persistence-unit-ref>
 </web-app>

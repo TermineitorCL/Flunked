@@ -5,19 +5,17 @@
  */
 package Modelo;
 
-import Modelo.*;
-import Modelo.exceptions.IllegalOrphanException;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Data.Ciudad;
-import Data.Cliente;
 import Data.Intermediario;
 import Data.Orden;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
+import Modelo.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -55,11 +53,6 @@ public class IntermediarioJpaController implements Serializable {
                 ciudadId = em.getReference(ciudadId.getClass(), ciudadId.getId());
                 intermediario.setCiudadId(ciudadId);
             }
-            Cliente clienteId = intermediario.getClienteId();
-            if (clienteId != null) {
-                clienteId = em.getReference(clienteId.getClass(), clienteId.getId());
-                intermediario.setClienteId(clienteId);
-            }
             Collection<Orden> attachedOrdenCollection = new ArrayList<Orden>();
             for (Orden ordenCollectionOrdenToAttach : intermediario.getOrdenCollection()) {
                 ordenCollectionOrdenToAttach = em.getReference(ordenCollectionOrdenToAttach.getClass(), ordenCollectionOrdenToAttach.getId());
@@ -70,10 +63,6 @@ public class IntermediarioJpaController implements Serializable {
             if (ciudadId != null) {
                 ciudadId.getIntermediarioCollection().add(intermediario);
                 ciudadId = em.merge(ciudadId);
-            }
-            if (clienteId != null) {
-                clienteId.getIntermediarioCollection().add(intermediario);
-                clienteId = em.merge(clienteId);
             }
             for (Orden ordenCollectionOrden : intermediario.getOrdenCollection()) {
                 Intermediario oldIntermediarioIdOfOrdenCollectionOrden = ordenCollectionOrden.getIntermediarioId();
@@ -107,8 +96,6 @@ public class IntermediarioJpaController implements Serializable {
             Intermediario persistentIntermediario = em.find(Intermediario.class, intermediario.getId());
             Ciudad ciudadIdOld = persistentIntermediario.getCiudadId();
             Ciudad ciudadIdNew = intermediario.getCiudadId();
-            Cliente clienteIdOld = persistentIntermediario.getClienteId();
-            Cliente clienteIdNew = intermediario.getClienteId();
             Collection<Orden> ordenCollectionOld = persistentIntermediario.getOrdenCollection();
             Collection<Orden> ordenCollectionNew = intermediario.getOrdenCollection();
             List<String> illegalOrphanMessages = null;
@@ -127,10 +114,6 @@ public class IntermediarioJpaController implements Serializable {
                 ciudadIdNew = em.getReference(ciudadIdNew.getClass(), ciudadIdNew.getId());
                 intermediario.setCiudadId(ciudadIdNew);
             }
-            if (clienteIdNew != null) {
-                clienteIdNew = em.getReference(clienteIdNew.getClass(), clienteIdNew.getId());
-                intermediario.setClienteId(clienteIdNew);
-            }
             Collection<Orden> attachedOrdenCollectionNew = new ArrayList<Orden>();
             for (Orden ordenCollectionNewOrdenToAttach : ordenCollectionNew) {
                 ordenCollectionNewOrdenToAttach = em.getReference(ordenCollectionNewOrdenToAttach.getClass(), ordenCollectionNewOrdenToAttach.getId());
@@ -146,14 +129,6 @@ public class IntermediarioJpaController implements Serializable {
             if (ciudadIdNew != null && !ciudadIdNew.equals(ciudadIdOld)) {
                 ciudadIdNew.getIntermediarioCollection().add(intermediario);
                 ciudadIdNew = em.merge(ciudadIdNew);
-            }
-            if (clienteIdOld != null && !clienteIdOld.equals(clienteIdNew)) {
-                clienteIdOld.getIntermediarioCollection().remove(intermediario);
-                clienteIdOld = em.merge(clienteIdOld);
-            }
-            if (clienteIdNew != null && !clienteIdNew.equals(clienteIdOld)) {
-                clienteIdNew.getIntermediarioCollection().add(intermediario);
-                clienteIdNew = em.merge(clienteIdNew);
             }
             for (Orden ordenCollectionNewOrden : ordenCollectionNew) {
                 if (!ordenCollectionOld.contains(ordenCollectionNewOrden)) {
@@ -215,11 +190,6 @@ public class IntermediarioJpaController implements Serializable {
             if (ciudadId != null) {
                 ciudadId.getIntermediarioCollection().remove(intermediario);
                 ciudadId = em.merge(ciudadId);
-            }
-            Cliente clienteId = intermediario.getClienteId();
-            if (clienteId != null) {
-                clienteId.getIntermediarioCollection().remove(intermediario);
-                clienteId = em.merge(clienteId);
             }
             em.remove(intermediario);
             utx.commit();

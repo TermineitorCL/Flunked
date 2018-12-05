@@ -5,10 +5,6 @@
  */
 package Modelo;
 
-import Modelo.*;
-import Modelo.exceptions.IllegalOrphanException;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
 import Data.Ciudad;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -19,6 +15,9 @@ import Data.Intermediario;
 import java.util.ArrayList;
 import java.util.Collection;
 import Data.Orden;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
+import Modelo.exceptions.RollbackFailureException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -266,15 +265,6 @@ public class CiudadJpaController implements Serializable {
         }
     }
 
-        public Ciudad findCiudadAll(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Ciudad.class, id);
-        } finally {
-            em.close();
-        }
-    }
-        
     public int getCiudadCount() {
         EntityManager em = getEntityManager();
         try {
@@ -287,4 +277,5 @@ public class CiudadJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

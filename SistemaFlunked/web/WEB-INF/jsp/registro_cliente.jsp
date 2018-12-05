@@ -73,8 +73,7 @@
                     <p>Ingrese sus datos de registro de cliente.</p>
                 </div> 
                 <div class="row contact-wrap"> 
-                    <div class="status alert alert-success" style="display: none"></div>
-                    <form:form method="POST" action="registro_cliente" modelAttribute="new-cliente-form">
+                    <form action="guardar_clientes" method="POST">  
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
                                 <p>Nombre</p>
@@ -97,10 +96,10 @@
                                 <input type="text" class="form-control" required="required" name="telefono">
                             </div>
                             <div class="form-group">
-                                <button type="submit" name="guardar" class="btn btn-primary btn-lg" required="required">Registrarse</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Registrase</button>
                             </div>
                         </div>                       
-                  </form:form>
+                  </form>
                 </div><!--/.row-->
             </div><!--/.container-->
         </section><!--/#contact-page-->
