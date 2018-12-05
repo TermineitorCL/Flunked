@@ -30,7 +30,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>redirect.jsp</welcome-file>
+        <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
     <persistence-unit-ref> 
         <persistence-unit-ref-name>persistence/SistemaFlunkedPU</persistence-unit-ref-name> 

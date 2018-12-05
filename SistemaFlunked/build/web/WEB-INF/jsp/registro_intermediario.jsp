@@ -8,7 +8,6 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="ControladoresJPA.CiudadJpaController"%>
 <%@page import="java.util.List"%>
 <%@page import="Data.Ciudad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -81,7 +80,7 @@
                 </div> 
                 <div class="row contact-wrap"> 
                     <div class="status alert alert-success" style="display: none"></div>
-                    <form id="main-contact-form" class="contact-form" name="contact-form" method="post" a modelAttribute="new-intermediario-form">
+                    <form id="main-contact-form" class="contact-form" name="contact-form" method="post">
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
                                 <label>Nombre</label>

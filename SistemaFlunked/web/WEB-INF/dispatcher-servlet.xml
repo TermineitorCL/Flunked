@@ -19,18 +19,6 @@
     <context:component-scan base-package="Controladores"/>
     <context:component-scan base-package="Data"/>
     <context:component-scan base-package="Modelo"/>
-   
-    
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> 
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/> 
-    
-    <mvc:view-controller path="/login_general.htm" view-name="login_general"/>
-    <mvc:view-controller path="/registro_cliente.htm" view-name="registro_cliente"/>
-    <mvc:view-controller path="/registro_general.htm" view-name="registro_general"/>
-    <mvc:view-controller path="/registro_intermediario.htm" view-name="registro_intermediario"/>
-    <mvc:view-controller path="/login_cliente.htm" view-name="login_cliente"/>
-    <mvc:view-controller path="/login_intermediario.htm" view-name="login_intermediario"/>
-    
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
