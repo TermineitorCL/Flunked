@@ -5,19 +5,17 @@
  */
 package Modelo;
 
-import Data.Boleta;
+import JPA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.List;
+import Data.Boleta;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Data.Orden;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 /**
  *
@@ -25,22 +23,20 @@ import javax.transaction.UserTransaction;
  */
 public class BoletaJpaController implements Serializable {
 
-    public BoletaJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public BoletaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Boleta boleta) throws RollbackFailureException, Exception {
+    public void create(Boleta boleta) {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Orden ordenId = boleta.getOrdenId();
             if (ordenId != null) {
                 ordenId = em.getReference(ordenId.getClass(), ordenId.getId());
@@ -51,14 +47,7 @@ public class BoletaJpaController implements Serializable {
                 ordenId.getBoletaCollection().add(boleta);
                 ordenId = em.merge(ordenId);
             }
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();
@@ -66,11 +55,11 @@ public class BoletaJpaController implements Serializable {
         }
     }
 
-    public void edit(Boleta boleta) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Boleta boleta) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Boleta persistentBoleta = em.find(Boleta.class, boleta.getId());
             Orden ordenIdOld = persistentBoleta.getOrdenId();
             Orden ordenIdNew = boleta.getOrdenId();
@@ -87,13 +76,8 @@ public class BoletaJpaController implements Serializable {
                 ordenIdNew.getBoletaCollection().add(boleta);
                 ordenIdNew = em.merge(ordenIdNew);
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = boleta.getId();
@@ -109,11 +93,11 @@ public class BoletaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Boleta boleta;
             try {
                 boleta = em.getReference(Boleta.class, id);
@@ -127,14 +111,7 @@ public class BoletaJpaController implements Serializable {
                 ordenId = em.merge(ordenId);
             }
             em.remove(boleta);
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();

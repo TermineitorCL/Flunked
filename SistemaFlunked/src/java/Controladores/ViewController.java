@@ -5,6 +5,11 @@
  */
 package Controladores;
 
+import Data.Cliente;
+import Modelo.ClienteJpaController;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,16 +26,37 @@ public class ViewController {
     public String viewRegistro (Model model){
         return "registro_general";
     }
+ 
     
     @RequestMapping(value = "/login_general.htm", method = RequestMethod.GET)
         public String viewLogin(Model model) {
         return "login_general";
     }
+  
+        
+        
         
     @RequestMapping(value = "/registro_cliente.htm", method = RequestMethod.GET)
     public String viewRegistroCliente (Model model){
         return "registro_cliente";
     }    
+    
+    @RequestMapping(value = "/registro_cliente.htm", method = RequestMethod.POST)
+    public String viewRegistroGuardar(Model model) {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("SistemaFlunkedPU");
+    EntityManager em = emf.createEntityManager();
+    Cliente cl = new Cliente();
+    cl.setNombre("hola");
+    cl.setApellido("2");
+    cl.setRut("3");
+    cl.setEmail("4");
+    cl.setTelefono("5");
+
+    ClienteJpaController pjcl = new ClienteJpaController(emf);
+    pjcl.create(cl);
+    return "registro_cliente";
+    }
+    
     @RequestMapping(value = "/registro_intermediario.htm", method = RequestMethod.GET)
     public String viewRegistroIntermediario (Model model){
         return "registro_intermediario";

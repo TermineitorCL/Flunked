@@ -5,22 +5,20 @@
  */
 package Modelo;
 
-import Data.Cliente;
+import JPA.exceptions.IllegalOrphanException;
+import JPA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Data.Orden;
-import Modelo.exceptions.IllegalOrphanException;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import Data.Cliente;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 /**
  *
@@ -28,25 +26,23 @@ import javax.transaction.UserTransaction;
  */
 public class ClienteJpaController implements Serializable {
 
-    public ClienteJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public ClienteJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Cliente cliente) throws RollbackFailureException, Exception {
+    public void create(Cliente cliente) {
         if (cliente.getOrdenCollection() == null) {
             cliente.setOrdenCollection(new ArrayList<Orden>());
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Collection<Orden> attachedOrdenCollection = new ArrayList<Orden>();
             for (Orden ordenCollectionOrdenToAttach : cliente.getOrdenCollection()) {
                 ordenCollectionOrdenToAttach = em.getReference(ordenCollectionOrdenToAttach.getClass(), ordenCollectionOrdenToAttach.getId());
@@ -63,14 +59,7 @@ public class ClienteJpaController implements Serializable {
                     oldClienteIdOfOrdenCollectionOrden = em.merge(oldClienteIdOfOrdenCollectionOrden);
                 }
             }
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();
@@ -78,11 +67,11 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public void edit(Cliente cliente) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Cliente cliente) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Cliente persistentCliente = em.find(Cliente.class, cliente.getId());
             Collection<Orden> ordenCollectionOld = persistentCliente.getOrdenCollection();
             Collection<Orden> ordenCollectionNew = cliente.getOrdenCollection();
@@ -117,13 +106,8 @@ public class ClienteJpaController implements Serializable {
                     }
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = cliente.getId();
@@ -139,11 +123,11 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Cliente cliente;
             try {
                 cliente = em.getReference(Cliente.class, id);
@@ -163,14 +147,7 @@ public class ClienteJpaController implements Serializable {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(cliente);
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();

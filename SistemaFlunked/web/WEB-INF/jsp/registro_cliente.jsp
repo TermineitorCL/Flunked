@@ -73,7 +73,7 @@
                     <p>Ingrese sus datos de registro de cliente.</p>
                 </div> 
                 <div class="row contact-wrap"> 
-                    <form action="guardar_clientes" method="POST">  
+                    <form action="/SistemaFlunked/registro_cliente.htm" method="POST">  
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
                                 <p>Nombre</p>

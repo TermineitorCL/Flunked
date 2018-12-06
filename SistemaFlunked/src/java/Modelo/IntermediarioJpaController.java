@@ -5,23 +5,21 @@
  */
 package Modelo;
 
+import JPA.exceptions.IllegalOrphanException;
+import JPA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Data.Ciudad;
-import Data.Intermediario;
 import Data.Orden;
-import Modelo.exceptions.IllegalOrphanException;
-import Modelo.exceptions.NonexistentEntityException;
-import Modelo.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import Data.Intermediario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 /**
  *
@@ -29,25 +27,23 @@ import javax.transaction.UserTransaction;
  */
 public class IntermediarioJpaController implements Serializable {
 
-    public IntermediarioJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public IntermediarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Intermediario intermediario) throws RollbackFailureException, Exception {
+    public void create(Intermediario intermediario) {
         if (intermediario.getOrdenCollection() == null) {
             intermediario.setOrdenCollection(new ArrayList<Orden>());
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Ciudad ciudadId = intermediario.getCiudadId();
             if (ciudadId != null) {
                 ciudadId = em.getReference(ciudadId.getClass(), ciudadId.getId());
@@ -73,14 +69,7 @@ public class IntermediarioJpaController implements Serializable {
                     oldIntermediarioIdOfOrdenCollectionOrden = em.merge(oldIntermediarioIdOfOrdenCollectionOrden);
                 }
             }
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();
@@ -88,11 +77,11 @@ public class IntermediarioJpaController implements Serializable {
         }
     }
 
-    public void edit(Intermediario intermediario) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Intermediario intermediario) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Intermediario persistentIntermediario = em.find(Intermediario.class, intermediario.getId());
             Ciudad ciudadIdOld = persistentIntermediario.getCiudadId();
             Ciudad ciudadIdNew = intermediario.getCiudadId();
@@ -141,13 +130,8 @@ public class IntermediarioJpaController implements Serializable {
                     }
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = intermediario.getId();
@@ -163,11 +147,11 @@ public class IntermediarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Intermediario intermediario;
             try {
                 intermediario = em.getReference(Intermediario.class, id);
@@ -192,14 +176,7 @@ public class IntermediarioJpaController implements Serializable {
                 ciudadId = em.merge(ciudadId);
             }
             em.remove(intermediario);
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();

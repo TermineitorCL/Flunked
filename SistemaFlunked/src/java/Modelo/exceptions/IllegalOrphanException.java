@@ -1,4 +1,4 @@
-package Modelo.exceptions;
+package JPA.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
