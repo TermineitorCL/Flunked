@@ -5,8 +5,7 @@
  */
 package Modelo;
 
-import JPA.exceptions.IllegalOrphanException;
-import JPA.exceptions.NonexistentEntityException;
+import Data.Ciudad;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -15,9 +14,10 @@ import javax.persistence.criteria.Root;
 import Data.Intermediario;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import Data.Ciudad;
 import Data.Orden;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 

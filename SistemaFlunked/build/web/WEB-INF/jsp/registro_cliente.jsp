@@ -77,23 +77,23 @@
                         <div class="col-sm-5 col-sm-offset-1">
                             <div class="form-group">
                                 <p>Nombre</p>
-                                <input type="text" name="nombre" class="form-control" required="required">
+                                <input type="text" name="nombre" class="form-control">
                             </div>
                             <div class="form-group">
                                 <p>Apellido</p>
-                                <input type="text" name="apellido" class="form-control" required="required">
+                                <input type="text" name="apellido" class="form-control">
                             </div>
                             <div class="form-group">
                                 <p>RUT</p>
-                                <input type="text" name="rut" class="form-control" required="required">
+                                <input type="text" name="rut" class="form-control">
                             </div>
                             <div class="form-group">
                                 <p>Correo</p>
-                                <input type="email" name="email" class="form-control" required="required">
+                                <input type="email" name="email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <p>Telefono</p>
-                                <input type="text" class="form-control" required="required" name="telefono">
+                                <input type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-lg">Registrase</button>

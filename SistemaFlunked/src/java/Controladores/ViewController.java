@@ -9,7 +9,9 @@ import Data.Cliente;
 import Modelo.ClienteJpaController;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,19 +44,23 @@ public class ViewController {
     }    
     
     @RequestMapping(value = "/registro_cliente.htm", method = RequestMethod.POST)
-    public String viewRegistroGuardar(Model model) {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("SistemaFlunkedPU");
-    EntityManager em = emf.createEntityManager();
-    Cliente cl = new Cliente();
-    cl.setNombre("hola");
-    cl.setApellido("2");
-    cl.setRut("3");
-    cl.setEmail("4");
-    cl.setTelefono("5");
-
-    ClienteJpaController pjcl = new ClienteJpaController(emf);
-    pjcl.create(cl);
-    return "registro_cliente";
+    
+    public String registroGuardar(Model model) {
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SistemaFlunkedPU");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        Cliente cl = new Cliente();
+        tx.begin();
+        cl.setNombre("hola");
+        cl.setApellido("2");
+        cl.setRut("3");
+        cl.setEmail("4");
+        cl.setTelefono("5");       
+        ClienteJpaController CLJAP = new ClienteJpaController(emf);
+        CLJAP.create(cl);
+        return "registro_cliente";
+        
     }
     
     @RequestMapping(value = "/registro_intermediario.htm", method = RequestMethod.GET)

@@ -5,8 +5,6 @@
  */
 package Modelo;
 
-import JPA.exceptions.IllegalOrphanException;
-import JPA.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -17,10 +15,12 @@ import Data.Cliente;
 import Data.Intermediario;
 import Data.SolicitudCompra;
 import Data.Boleta;
+import Data.Orden;
+import Modelo.exceptions.IllegalOrphanException;
+import Modelo.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import Data.Orden;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 

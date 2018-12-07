@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" metadata-complete="true">
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
@@ -12,25 +12,9 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>lectura_ciudad</servlet-name>
-        <servlet-class>Servlet.lectura_ciudad</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>guardar_clientes</servlet-name>
-        <servlet-class>Servlet.guardar_clientes</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>lectura_ciudad</servlet-name>
-        <url-pattern>/lectura_ciudad</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>guardar_clientes</servlet-name>
-        <url-pattern>/guardar_clientes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
